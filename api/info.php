@@ -56,8 +56,10 @@ foreach ($output as $line) {
 }
 
 if (empty($title)) {
-    response(false, 'Could not parse video information.');
+    $rawOutput = !empty($output) ? implode(' ', $output) : 'No output from yt-dlp';
+    response(false, 'Could not parse video info. Raw output: ' . cleanInput($rawOutput));
 }
+
 
 response(true, 'Video information fetched successfully.', [
     'title' => $title,

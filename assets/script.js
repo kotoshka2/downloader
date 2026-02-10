@@ -64,7 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching video info:", error);
             previewLoading.classList.add('d-none');
             videoPreview.classList.add('d-none');
+            showError("Network or Server error occurred while fetching video info.");
         }
+
     }
 
     let pollInterval;

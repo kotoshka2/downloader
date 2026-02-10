@@ -26,11 +26,12 @@ function cleanShellUrl($url) {
 }
 
 function getCookiesFlag() {
-    if (file_exists(COOKIES_FILE)) {
+    if (file_exists(COOKIES_FILE) && is_file(COOKIES_FILE) && is_readable(COOKIES_FILE)) {
         return ' --cookies ' . escapeshellarg(COOKIES_FILE);
     }
     return '';
 }
+
 
 function getLogPath($id) {
     return __DIR__ . "/logs/{$id}.log";
