@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  youtube-downloader:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount downloads so they persist on host
+      - ./downloads:/var/www/html/downloads
+      # Mount logs for debugging
+      - ./api/logs:/var/www/html/api/logs
+    restart: unless-stopped
