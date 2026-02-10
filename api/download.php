@@ -77,39 +77,16 @@ function serveFile($filepath) {
     header('Pragma: public');
     header('Content-Length: ' . filesize($filepath));
     
-    // Clear ALL output buffers to avoid memory issues and start sending immediately
-    while (ob_get_level()) {
+    // Clear output buffer
+    if (ob_get_level()) {
         ob_end_clean();
     }
     
-    // 1. TRY ACCELERATED SERVING (Highest performance, Server handles it)
-    
-    // Nginx (uses X-Accel-Redirect)
-    // We assume /downloads/ is mapped in Nginx config
-    header('X-Accel-Redirect: /downloads/' . $filename);
-    
-    // Apache (uses X-Sendfile)
-    if (function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
-        header('X-Sendfile: ' . realpath($filepath));
-    }
-    // If either of the above headers are supported, the server will take over after we exit
-    // If not, it will fall through to our PHP streaming logic (safe).
-
-    // 2. FALLBACK: OPTIMIZED CHUNKED READING
-
-    // Explicitly disable compression for this download if possible
-    if (function_exists('apache_setenv')) {
-        @apache_setenv('no-gzip', 1);
-    }
-    @ini_set('zlib.output_compression', 'Off');
-
     $file = fopen($filepath, 'rb');
     if ($file) {
-        $chunkSize = 1024 * 128; // 128 KB chunks as suggested
         while (!feof($file)) {
-            echo fread($file, $chunkSize);
+            echo fread($file, 8192);
             flush();
-            // Check if connection is still alive
             if (connection_status() != 0) {
                 fclose($file);
                 exit;
@@ -119,6 +96,7 @@ function serveFile($filepath) {
     }
     exit;
 }
+
 
 
 ?>

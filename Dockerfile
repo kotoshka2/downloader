@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
     gnupg \
-    libapache2-mod-xsendfile \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js (LTS)
@@ -21,8 +20,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
     && chmod a+rx /usr/local/bin/yt-dlp
 
-# Enable Apache modules
-RUN a2enmod rewrite xsendfile
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
 
 # Set working directory to default Apache document root
 WORKDIR /var/www/html
@@ -38,6 +37,3 @@ RUN mkdir -p downloads api/logs \
 # Expose port 80
 EXPOSE 80
 
-# Configure XSendFile for Apache
-RUN echo "XSendFile on" >> /etc/apache2/apache2.conf \
-    && echo "XSendFilePath /var/www/html/downloads" >> /etc/apache2/apache2.conf
