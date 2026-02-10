@@ -82,6 +82,14 @@ function serveFile($filepath) {
         ob_end_clean();
     }
     
+    // 1. TRY X-SENDFILE (Highest performance, Apache handles it)
+    // Works if mod_xsendfile is enabled
+    if (function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
+        header('X-Sendfile: ' . realpath($filepath));
+        exit;
+    }
+
+    // 2. FALLBACK: OPTIMIZED CHUNKED READING
     // Explicitly disable compression for this download if possible
     if (function_exists('apache_setenv')) {
         @apache_setenv('no-gzip', 1);
@@ -90,9 +98,9 @@ function serveFile($filepath) {
 
     $file = fopen($filepath, 'rb');
     if ($file) {
-        // Use 8KB chunks for a good balance between overhead and responsiveness
+        $chunkSize = 1024 * 128; // 128 KB chunks as suggested
         while (!feof($file)) {
-            echo fread($file, 8192);
+            echo fread($file, $chunkSize);
             flush();
             // Check if connection is still alive
             if (connection_status() != 0) {
@@ -104,5 +112,6 @@ function serveFile($filepath) {
     }
     exit;
 }
+
 
 ?>
