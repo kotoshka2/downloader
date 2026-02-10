@@ -6,7 +6,15 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     curl \
+    ca-certificates \
+    gnupg \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js (LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs \
+    && node -v \
+    && npm -v
 
 # Install yt-dlp
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
@@ -22,7 +30,6 @@ WORKDIR /var/www/html
 COPY . /var/www/html/
 
 # Set up permissions for writable directories
-# We create the directories if they don't exist and set ownership to www-data (Apache user)
 RUN mkdir -p downloads api/logs \
     && chown -R www-data:www-data downloads api/logs \
     && chmod -R 755 downloads api/logs
