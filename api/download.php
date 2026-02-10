@@ -82,14 +82,21 @@ function serveFile($filepath) {
         ob_end_clean();
     }
     
-    // 1. TRY X-SENDFILE (Highest performance, Apache handles it)
-    // Works if mod_xsendfile is enabled
+    // 1. TRY ACCELERATED SERVING (Highest performance, Server handles it)
+    
+    // Nginx (uses X-Accel-Redirect)
+    // We assume /downloads/ is mapped in Nginx config
+    header('X-Accel-Redirect: /downloads/' . $filename);
+    
+    // Apache (uses X-Sendfile)
     if (function_exists('apache_get_modules') && in_array('mod_xsendfile', apache_get_modules())) {
         header('X-Sendfile: ' . realpath($filepath));
-        exit;
     }
+    // If either of the above headers are supported, the server will take over after we exit
+    // If not, it will fall through to our PHP streaming logic (safe).
 
     // 2. FALLBACK: OPTIMIZED CHUNKED READING
+
     // Explicitly disable compression for this download if possible
     if (function_exists('apache_setenv')) {
         @apache_setenv('no-gzip', 1);
