@@ -17,7 +17,9 @@ if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
 // --dump-json: Output JSON metadata
 // --no-warnings: Suppress warnings
 $cookies = getCookiesFlag();
-$cmd = "yt-dlp --skip-download --dump-json --no-warnings$cookies \"$url\"";
+$escapedUrl = escapeshellarg($url);
+$cmd = "yt-dlp --skip-download --dump-json --no-warnings$cookies $escapedUrl 2>&1";
+
 
 
 $output = [];
@@ -26,9 +28,11 @@ $returnVar = 0;
 exec($cmd, $output, $returnVar);
 
 if ($returnVar !== 0 || empty($output)) {
+    // Filter out some common non-JSON noise if any
     $errorMsg = !empty($output) ? implode(' ', $output) : 'yt-dlp failed with code ' . $returnVar;
-    response(false, 'Failed to fetch video information: ' . $errorMsg);
+    response(false, 'Failed to fetch video information: ' . cleanInput($errorMsg));
 }
+
 
 
 // Initialize variables
