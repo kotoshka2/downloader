@@ -5,11 +5,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     response(false, 'Invalid request method.');
 }
 
-$url = cleanInput($_GET['url'] ?? '');
+$url = cleanShellUrl($_GET['url'] ?? '');
 
 if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
     response(false, 'Invalid URL provided.');
 }
+
 
 // Prepare yt-dlp command to get JSON metadata
 // --skip-download: Don't download video
@@ -25,8 +26,10 @@ $returnVar = 0;
 exec($cmd, $output, $returnVar);
 
 if ($returnVar !== 0 || empty($output)) {
-    response(false, 'Failed to fetch video information.');
+    $errorMsg = !empty($output) ? implode(' ', $output) : 'yt-dlp failed with code ' . $returnVar;
+    response(false, 'Failed to fetch video information: ' . $errorMsg);
 }
+
 
 // Initialize variables
 $title = '';

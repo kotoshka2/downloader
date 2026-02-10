@@ -5,7 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     response(false, 'Invalid request method.');
 }
 
-$url = cleanInput($_POST['url'] ?? '');
+$url = cleanShellUrl($_POST['url'] ?? '');
+
 
 if (!filter_var($url, FILTER_VALIDATE_URL)) {
     response(false, 'Invalid URL provided.');

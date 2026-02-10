@@ -55,7 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If invalid URL or error, hide everything
                 previewLoading.classList.add('d-none');
                 videoPreview.classList.add('d-none');
+                if (data.message) {
+                    showError(data.message);
+                }
             }
+
         } catch (error) {
             console.error("Error fetching video info:", error);
             previewLoading.classList.add('d-none');

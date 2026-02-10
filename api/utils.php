@@ -21,6 +21,12 @@ function cleanInput($data) {
     return htmlspecialchars(stripslashes(trim($data)));
 }
 
+function cleanShellUrl($url) {
+    // For shell commands, we only want to trim and remove any potentially dangerous characters
+    // but we MUST NOT use htmlspecialchars as it breaks URLs with '&'
+    return trim(stripslashes($url));
+}
+
 function getCookiesFlag() {
     if (file_exists(COOKIES_FILE)) {
         return ' --cookies "' . COOKIES_FILE . '"';
