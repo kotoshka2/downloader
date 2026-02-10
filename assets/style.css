@@ -204,3 +204,63 @@ body>.container {
         background-position: -200% 0;
     }
 }
+
+/* Instruction Steps */
+.step-card {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.step-card:hover {
+    background: rgba(30, 41, 59, 0.6);
+    transform: translateY(-5px);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.step-icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.step-icon {
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.step-number {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    background: var(--primary-color);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.instruction-steps h5 {
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+}
+
+.instruction-steps p {
+    color: #e2e8f0 !important;
+    /* Lighter color for better readability */
+}
+
+.instruction-steps strong {
+    color: #ffffff;
+    font-weight: 600;
+}

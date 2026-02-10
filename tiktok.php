@@ -68,4 +68,6 @@
     </div>
 </div>
 
+<?php include 'includes/instructions.php'; ?>
+
 <?php include 'includes/footer.php'; ?>
