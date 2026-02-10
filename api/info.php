@@ -27,38 +27,31 @@ $returnVar = 0;
 
 exec($cmd, $output, $returnVar);
 
-if ($returnVar !== 0 || empty($output)) {
-    // Filter out some common non-JSON noise if any
-    $errorMsg = !empty($output) ? implode(' ', $output) : 'yt-dlp failed with code ' . $returnVar;
-    response(false, 'Failed to fetch video information: ' . cleanInput($errorMsg));
-}
-
-
-
-// Initialize variables
-$title = '';
-$thumbnail = '';
-$duration = 0;
-$durationString = '';
-
-// Process output, sometimes yt-dlp returns multiple JSON objects (e.g. playlist)
-// We take the first valid one if possible, or handling single video
+$parsedJson = null;
 foreach ($output as $line) {
     if ($json = json_decode($line, true)) {
         if (isset($json['title'])) {
-            $title = $json['title'];
-            $thumbnail = $json['thumbnail'] ?? '';
-            $duration = $json['duration'] ?? 0;
-            $durationString = $json['duration_string'] ?? gmdate("H:i:s", $duration);
-            break; // Found first valid video
+            $parsedJson = $json;
+            break; 
         }
     }
 }
 
-if (empty($title)) {
-    $rawOutput = !empty($output) ? implode(' ', $output) : 'No output from yt-dlp';
-    response(false, 'Could not parse video info. Raw output: ' . cleanInput($rawOutput));
+if (!$parsedJson) {
+    $errorMsg = !empty($output) ? implode(' ', $output) : 'yt-dlp failed with code ' . $returnVar;
+    // Limit error message length to avoid breaking the UI/JSON response
+    if (strlen($errorMsg) > 500) {
+        $errorMsg = substr($errorMsg, 0, 500) . '... [truncated]';
+    }
+    response(false, 'Failed to fetch video information: ' . cleanInput($errorMsg));
 }
+
+// Initialize variables from parsed data
+$title = $parsedJson['title'] ?? '';
+$thumbnail = $parsedJson['thumbnail'] ?? '';
+$duration = $parsedJson['duration'] ?? 0;
+$durationString = $parsedJson['duration_string'] ?? gmdate("H:i:s", $duration);
+
 
 
 response(true, 'Video information fetched successfully.', [

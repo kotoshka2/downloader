@@ -77,12 +77,32 @@ function serveFile($filepath) {
     header('Pragma: public');
     header('Content-Length: ' . filesize($filepath));
     
-    // Clear output buffer
-    if (ob_get_level()) {
+    // Clear ALL output buffers to avoid memory issues and start sending immediately
+    while (ob_get_level()) {
         ob_end_clean();
     }
     
-    readfile($filepath);
+    // Explicitly disable compression for this download if possible
+    if (function_exists('apache_setenv')) {
+        @apache_setenv('no-gzip', 1);
+    }
+    @ini_set('zlib.output_compression', 'Off');
+
+    $file = fopen($filepath, 'rb');
+    if ($file) {
+        // Use 8KB chunks for a good balance between overhead and responsiveness
+        while (!feof($file)) {
+            echo fread($file, 8192);
+            flush();
+            // Check if connection is still alive
+            if (connection_status() != 0) {
+                fclose($file);
+                exit;
+            }
+        }
+        fclose($file);
+    }
     exit;
 }
+
 ?>
