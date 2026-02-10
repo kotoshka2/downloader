@@ -1,11 +1,11 @@
-<?php $pageTitle = "Скачать видео отовсюду"; include 'includes/header.php'; ?>
+<?php $pageTitle = "Скачать Facebook Stories"; include 'includes/header.php'; ?>
 
 <div class="row w-100 justify-content-center">
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Скачать отовсюду</h1>
-                <p class="text-white">Загружайте видео из любых социальных сетей в лучшем качестве.</p>
+                <h1 class="fw-bold mb-2">Facebook Stories</h1>
+                <p class="text-white">Скачивайте сторис из Facebook в лучшем качестве быстро и удобно.</p>
             </div>
 
             <form id="downloadForm">
@@ -13,7 +13,7 @@
                     <span class="input-group-text bg-transparent border-end-0 text-secondary">
                         <i class="fas fa-link"></i>
                     </span>
-                    <input type="url" class="form-control border-start-0 ps-0" id="videoUrl" placeholder="Вставьте ссылку на видео..." required>
+                    <input type="url" class="form-control border-start-0 ps-0" id="videoUrl" placeholder="Вставьте ссылку на сторис..." required>
                 </div>
                 <button type="button" id="downloadBtn" class="btn btn-primary w-100 btn-lg shadow-sm">
                     Начать загрузку <i class="fas fa-download ms-2"></i>
@@ -26,30 +26,6 @@
                 </div>
             </form>
 
-            <div class="mt-4 row g-2">
-                <div class="col-6 col-sm-3">
-                    <a href="youtube.php" class="btn btn-outline-light w-100 py-3">
-                        YouTube
-                    </a>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <a href="tiktok.php" class="btn btn-outline-light w-100 py-3">
-                        TikTok
-                    </a>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <a href="instagram.php" class="btn btn-outline-light w-100 py-3">
-                        Instagram
-                    </a>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <a href="facebook.php" class="btn btn-outline-light w-100 py-3">
-                        Facebook
-                    </a>
-                </div>
-            </div>
-
-            <!-- Video Preview -->
             <div id="videoPreview" class="mt-4 mb-4 d-none">
                 <div class="card bg-transparent border-0">
                     <div class="row g-3 align-items-center">
@@ -63,7 +39,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="previewLoading" class="mt-4 mb-4 d-none">
                 <div class="card bg-transparent border-0/50">
                     <div class="row g-3 align-items-center">
@@ -75,7 +50,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="statusArea" class="mt-4 d-none">
                 <div class="d-flex justify-content-between mb-1">
                     <span id="statusText" class="small fw-semibold">Обработка...</span>
@@ -85,7 +59,6 @@
                     <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" style="width: 0%"></div>
                 </div>
             </div>
-
             <div id="resultArea" class="mt-4 d-none text-center"></div>
             <div id="errorArea" class="mt-3 alert alert-danger d-none" role="alert"></div>
         </div>

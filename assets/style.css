@@ -15,6 +15,71 @@ body {
     color: var(--text-main);
     font-family: 'Outfit', sans-serif;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* This is handled by Bootstrap min-vh-100 mostly, but we need flex-grow */
+}
+
+/* Sticky Footer Fix */
+html,
+body {
+    height: 100%;
+}
+
+body>.container {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex-shrink: 0;
+    padding: 2.5rem 0;
+    background: rgba(15, 23, 42, 0.8);
+    border-top: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+}
+
+.footer p {
+    color: #cbd5e1 !important;
+    /* Lighter shade for better contrast */
+    font-size: 0.95rem;
+}
+
+.footer .legal-links a {
+    color: var(--primary-color) !important;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: underline !important;
+}
+
+.footer .legal-links a:hover {
+    color: var(--text-main) !important;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    margin: 0 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-main) !important;
+}
+
+.disclaimer-text {
+    color: #94a3b8 !important;
+    /* Higher contrast than text-muted */
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-weight: 400;
 }
 
 .glass-card {
