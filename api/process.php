@@ -1,6 +1,3 @@
-<?php
-require_once 'utils.php';
-
 require_once 'utils.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -25,9 +22,13 @@ $id = uniqid();
 $logFile = getLogPath($id);
 $outputTemplate = getDownloadPattern($id);
 
-// Ensure logs directory exists
+// Ensure logs directory exists - suppress warning if it fails to be handled by response
 if (!is_dir(__DIR__ . '/logs')) {
-    mkdir(__DIR__ . '/logs', 0755, true);
+    @mkdir(__DIR__ . '/logs', 0755, true);
+}
+
+if (!is_writable(__DIR__ . '/logs')) {
+    response(false, 'The api/logs directory is not writable. Please check permissions.');
 }
 
 // Command execution
@@ -39,7 +40,9 @@ $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 // --restrict-filenames: ASCII only filenames
 // -o ...: Output template
 // 2>&1: Redirect stderr to stdout
-$cmd = "yt-dlp -f \"bestvideo[ext=mp4],bestaudio[ext=m4a]\" --newline --restrict-filenames -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
+$cookies = getCookiesFlag();
+$cmd = "yt-dlp -f \"bestvideo[ext=mp4],bestaudio[ext=m4a]\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
+
 
 if ($isWindows) {
     // Windows background execution

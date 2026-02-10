@@ -15,7 +15,9 @@ if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
 // --skip-download: Don't download video
 // --dump-json: Output JSON metadata
 // --no-warnings: Suppress warnings
-$cmd = "yt-dlp --skip-download --dump-json --no-warnings \"$url\"";
+$cookies = getCookiesFlag();
+$cmd = "yt-dlp --skip-download --dump-json --no-warnings$cookies \"$url\"";
+
 
 $output = [];
 $returnVar = 0;

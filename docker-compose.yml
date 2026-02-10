@@ -10,4 +10,5 @@ services:
       - ./downloads:/var/www/html/downloads
       # Mount logs for debugging
       - ./api/logs:/var/www/html/api/logs
+      - ./cookies.txt:/var/www/html/cookies.txt
     restart: unless-stopped

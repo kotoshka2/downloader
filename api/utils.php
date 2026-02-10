@@ -9,6 +9,8 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 }
 
 
+if (!defined('COOKIES_FILE')) define('COOKIES_FILE', __DIR__ . '/../cookies.txt');
+
 function response($success, $message, $data = []) {
     header('Content-Type: application/json');
     echo json_encode(array_merge(['success' => $success, 'message' => $message], $data));
@@ -17,6 +19,13 @@ function response($success, $message, $data = []) {
 
 function cleanInput($data) {
     return htmlspecialchars(stripslashes(trim($data)));
+}
+
+function getCookiesFlag() {
+    if (file_exists(COOKIES_FILE)) {
+        return ' --cookies "' . COOKIES_FILE . '"';
+    }
+    return '';
 }
 
 function getLogPath($id) {

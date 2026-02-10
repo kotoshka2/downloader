@@ -17,7 +17,17 @@ if (!file_exists($logFile)) {
     exit;
 }
 
-$content = file_get_contents($logFile);
+if (!is_readable($logFile)) {
+    echo json_encode(['success' => true, 'status' => 'starting', 'progress' => 0]);
+    exit;
+}
+
+$content = @file_get_contents($logFile);
+if ($content === false) {
+    echo json_encode(['success' => false, 'status' => 'error', 'message' => 'Failed to read log file.']);
+    exit;
+}
+
 
 // Check for errors
 if (strpos($content, 'ERROR:') !== false) {

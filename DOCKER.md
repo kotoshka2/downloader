@@ -52,14 +52,53 @@ docker run -d -p 8080:80 \
 
 ## Configuration
 
+### Using Cookies for Authentication
+Some sites (Instagram, Facebook, restricted YouTube videos) require cookies to work. If you see errors like "Rate limit reached" or "Login required", follow these steps:
+
+1.  **Install Cookie Extension**
+    Install the extension **"Get cookies.txt LOCALLY"** for [Chrome](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/ccmclabjdofocmjdmegebebeonhfcmio) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/get-cookiestxt/).
+
+2.  **Export Cookies**
+    - Go to the site you want to download from (e.g., [instagram.com](https://instagram.com)).
+    - Log in to your account.
+    - Click the extension icon and select **"Export"** or **"Download"** (Netscape format).
+    - Save the file as `cookies.txt` in the root of this project.
+
+3.  **Docker Setup**
+    If you are using Docker, you need to "mount" this file into the container.
+    - Open `docker-compose.yml` and add the line under `volumes:`:
+      ```yaml
+      services:
+        youtube-downloader:
+          # ...
+          volumes:
+            - ./downloads:/var/www/html/downloads
+            - ./api/logs:/var/www/html/api/logs
+            - ./cookies.txt:/var/www/html/cookies.txt  # <--- ADD THIS LINE
+      ```
+    - Restart the containers:
+      ```bash
+      docker-compose up -d
+      ```
+
+4.  **Verification**
+    Once the file is placed and mapped, the application will automatically use it for all requests.
+
+---
+
 - **Ports**: The application runs on port `8080` by default. You can change this in `docker-compose.yml`.
+
+
 - **Volumes**:
     - `./downloads`: Downloaded files are saved here on your host machine.
     - `./api/logs`: Application logs are accessible here.
 
 ## Troubleshooting
 
-- **Permissions**: If you encounter permission errors on Linux host, ensure the `downloads` and `api/logs` directories on your host are writable by the container user (www-data, usually UID 33).
+- **Permissions**: If you encounter permission errors on Linux host (e.g. `Unexpected token <`), ensure the `downloads` and `api/logs` directories on your host are writable by the container user. On Linux, Docker often runs as root, while Apache runs as `www-data` (UID 33).
     ```bash
-    chmod 777 downloads api/logs
+    # Fix permissions on host
+    sudo chown -R 33:33 downloads api/logs
+    sudo chmod -R 775 downloads api/logs
     ```
+

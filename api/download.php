@@ -1,10 +1,6 @@
 <?php
 require_once 'utils.php';
 
-require_once 'utils.php';
-
-require_once 'utils.php';
-
 $id = cleanInput($_GET['id'] ?? '');
 
 if (!$id || !preg_match('/^[a-f0-9]+$/', $id)) {
