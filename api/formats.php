@@ -21,6 +21,12 @@ $returnVar = 0;
 
 exec($cmd, $output, $returnVar);
 
+// Fallback: If failed with cookies, try without them
+if ($returnVar !== 0 && !empty($cookies)) {
+    $cmdNoCookies = "yt-dlp --no-config -F --no-warnings " . escapeshellarg($url) . " 2>&1";
+    exec($cmdNoCookies, $output, $returnVar);
+}
+
 if ($returnVar !== 0) {
     $errorMsg = !empty($output) ? implode(' ', $output) : 'Failed to fetch formats';
     if (strlen($errorMsg) > 500) {

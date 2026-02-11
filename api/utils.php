@@ -27,6 +27,8 @@ function cleanShellUrl($url) {
 
 function getCookiesFlag() {
     if (file_exists(COOKIES_FILE) && is_file(COOKIES_FILE) && is_readable(COOKIES_FILE)) {
+        // We use cookies if the file exists. 
+        // If a specific site (like YouTube) fails with cookies, the user should remove YouTube cookies from the file.
         return ' --cookies ' . escapeshellarg(COOKIES_FILE);
     }
     return '';
