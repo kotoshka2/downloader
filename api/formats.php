@@ -66,11 +66,32 @@ foreach ($output as $line) {
             $filesizeApprox = $sizeMatch[1] . $sizeMatch[2] . 'B';
         }
         
-        // Only include MP4 video formats with resolution
-        if ($ext === 'mp4' && $height > 0 && $isVideoOnly) {
+        // Accept MP4 and WEBM video formats with resolution (not just mp4)
+        if (($ext === 'mp4' || $ext === 'webm') && $height > 0 && $isVideoOnly) {
             // Check if we already have this quality (keep the best one for each resolution)
+            // Prefer mp4 over webm for same resolution
             $qualityKey = $height;
-            if (!isset($videoFormats[$qualityKey]) || $fps > ($videoFormats[$qualityKey]['fps'] ?? 0)) {
+            if (!isset($videoFormats[$qualityKey])) {
+                $videoFormats[$qualityKey] = [
+                    'format_id' => $formatId,
+                    'height' => $height,
+                    'width' => $width,
+                    'fps' => $fps,
+                    'filesize_approx' => $filesizeApprox,
+                    'ext' => $ext
+                ];
+            } elseif ($ext === 'mp4' && $videoFormats[$qualityKey]['ext'] === 'webm') {
+                // Replace webm with mp4 if available
+                $videoFormats[$qualityKey] = [
+                    'format_id' => $formatId,
+                    'height' => $height,
+                    'width' => $width,
+                    'fps' => $fps,
+                    'filesize_approx' => $filesizeApprox,
+                    'ext' => $ext
+                ];
+            } elseif ($fps > ($videoFormats[$qualityKey]['fps'] ?? 0) && $ext === $videoFormats[$qualityKey]['ext']) {
+                // Keep higher fps for same format type
                 $videoFormats[$qualityKey] = [
                     'format_id' => $formatId,
                     'height' => $height,
@@ -94,7 +115,17 @@ foreach ($output as $line) {
 }
 
 if (empty($videoFormats)) {
-    response(false, 'No compatible video formats found. This video might not support quality selection.');
+    // Better error message for debugging
+    $allFormatExts = [];
+    foreach ($output as $line) {
+        if (preg_match('/^(\d+)\s+(\w+)/', trim($line), $m)) {
+            $allFormatExts[] = $m[2];
+        }
+    }
+    $uniqueExts = array_unique($allFormatExts);
+    $extList = implode(', ', $uniqueExts);
+    
+    response(false, 'No compatible video formats found. This video might not support quality selection. Found extensions: ' . $extList . '. Try using cookies.txt or check if video requires authentication.');
 }
 
 // Sort video formats by height (descending - best quality first)
