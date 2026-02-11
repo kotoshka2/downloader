@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="assets/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
+<script>(function(s){s.dataset.zone='10598618',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
