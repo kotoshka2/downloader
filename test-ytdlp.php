@@ -18,28 +18,29 @@ if (empty($ytdlpPath)) {
 
 // Test 2: Check yt-dlp version
 echo "2. Checking yt-dlp version...\n";
-$version = shell_exec('yt-dlp --version 2>&1');
+$version = shell_exec('yt-dlp --no-config --version 2>&1');
 echo "Version: $version\n";
 
-// Test 3: Try to fetch formats for a test video
-echo "3. Testing format fetching...\n";
-$testUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+// Test 3: Try to fetch formats
+echo "3. Testing fetching information...\n";
+$testUrl = 'https://www.youtube.com/watch?v=9_ldCQUgU7Q';
 echo "Test URL: $testUrl\n\n";
 
-$cmd = "yt-dlp -F --no-warnings " . escapeshellarg($testUrl) . " 2>&1";
-echo "Command: $cmd\n\n";
+echo "--- A: WITHOUT COOKIES ---\n";
+$cmdA = "yt-dlp --no-config --dump-json --no-warnings " . escapeshellarg($testUrl) . " 2>&1";
+$outputA = shell_exec($cmdA);
+echo (json_decode($outputA) ? "SUCCESS: Got JSON metadata" : "ERROR: " . substr($outputA, 0, 200));
+echo "\n\n";
 
-echo "Output:\n";
-echo "---\n";
-$output = shell_exec($cmd);
-echo $output;
-echo "\n---\n";
-
-if (empty($output)) {
-    echo "\nERROR: No output from yt-dlp\n";
+echo "--- B: WITH COOKIES ---\n";
+$cookies = file_exists(__DIR__ . '/cookies.txt') ? " --cookies cookies.txt" : "";
+if (empty($cookies)) {
+    echo "Skipping: cookies.txt not found in " . __DIR__;
 } else {
-    echo "\nSUCCESS: yt-dlp returned data\n";
+    $cmdB = "yt-dlp --no-config --dump-json --no-warnings$cookies " . escapeshellarg($testUrl) . " 2>&1";
+    $outputB = shell_exec($cmdB);
+    echo (json_decode($outputB) ? "SUCCESS: Got JSON metadata" : "ERROR: " . substr($outputB, 0, 200));
 }
 
-echo "\n=== Test Complete ===\n";
+echo "\n\n=== Test Complete ===\n";
 ?>
