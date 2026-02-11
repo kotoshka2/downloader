@@ -50,6 +50,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Quality Selection -->
+            <div id="qualitySelection" class="mt-4 d-none">
+                <label class="form-label fw-semibold text-white">Select Quality:</label>
+                <div id="qualityOptions" class="d-grid gap-2">
+                    <!-- Quality buttons populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Quality Loading Placeholder -->
+            <div id="qualityLoading" class="mt-4 d-none">
+                <div class="skeleton-box rounded mb-2" style="height: 50px;"></div>
+                <div class="skeleton-box rounded mb-2" style="height: 50px;"></div>
+                <div class="skeleton-box rounded" style="height: 50px;"></div>
+            </div>
+
             <div id="statusArea" class="mt-4 d-none">
                 <div class="d-flex justify-content-between mb-1">
                     <span id="statusText" class="small fw-semibold">Обработка...</span>

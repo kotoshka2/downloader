@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $url = cleanShellUrl($_POST['url'] ?? '');
-
+$quality = cleanInput($_POST['quality'] ?? ''); // Format ID for quality selection
 
 if (!filter_var($url, FILTER_VALIDATE_URL)) {
     response(false, 'Invalid URL provided.');
@@ -43,7 +43,18 @@ $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 // -o ...: Output template
 // 2>&1: Redirect stderr to stdout
 $cookies = getCookiesFlag();
-$cmd = "yt-dlp -f \"bestvideo[ext=mp4],bestaudio[ext=m4a]\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
+
+// Build format string based on quality selection
+if (!empty($quality) && preg_match('/^\d+$/', $quality)) {
+    // User selected specific quality: download that video format + best audio
+    // yt-dlp will automatically merge them into a single file
+    $formatString = "{$quality}+bestaudio[ext=m4a]/bestaudio";
+} else {
+    // Default: best video and audio as separate files (current behavior)
+    $formatString = "bestvideo[ext=mp4],bestaudio[ext=m4a]";
+}
+
+$cmd = "yt-dlp -f \"$formatString\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
 
 
 if ($isWindows) {

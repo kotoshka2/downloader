@@ -15,7 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewTitle = document.getElementById('previewTitle');
     const previewDuration = document.getElementById('previewDuration');
 
+    // Quality Selection Elements
+    const qualitySelection = document.getElementById('qualitySelection');
+    const qualityLoading = document.getElementById('qualityLoading');
+    const qualityOptions = document.getElementById('qualityOptions');
+
     let debounceTimer;
+    let availableFormats = null;
+    let selectedQuality = null;
 
     urlInput.addEventListener('input', () => {
         const url = urlInput.value.trim();
@@ -25,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!url) {
             videoPreview.classList.add('d-none');
             previewLoading.classList.add('d-none');
+            qualitySelection.classList.add('d-none');
+            qualityLoading.classList.add('d-none');
+            selectedQuality = null;
+            availableFormats = null;
             return;
         }
 
@@ -51,6 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewLoading.classList.add('d-none');
                 videoPreview.classList.remove('d-none');
                 errorArea.classList.add('d-none'); // Hide error if valid
+
+                // Fetch available formats after preview loads
+                fetchFormats(url);
             } else {
                 // If invalid URL or error, hide everything
                 previewLoading.classList.add('d-none');
@@ -67,6 +81,78 @@ document.addEventListener('DOMContentLoaded', () => {
             showError("Network or Server error occurred while fetching video info.");
         }
 
+    }
+
+    async function fetchFormats(url) {
+        try {
+            // Show loading skeleton
+            qualitySelection.classList.add('d-none');
+            qualityLoading.classList.remove('d-none');
+
+            const response = await fetch(`api/formats.php?url=${encodeURIComponent(url)}`);
+            const data = await response.json();
+
+            if (data.success && data.formats && data.formats.length > 0) {
+                availableFormats = data;
+                renderQualityOptions(data.formats);
+                // Auto-select best quality (first in array)
+                selectedQuality = data.formats[0].format_id;
+
+                qualityLoading.classList.add('d-none');
+                qualitySelection.classList.remove('d-none');
+            } else {
+                // No formats available or error - hide quality selection
+                qualityLoading.classList.add('d-none');
+                qualitySelection.classList.add('d-none');
+                // Optionally show a message that quality selection is not available
+            }
+
+        } catch (error) {
+            console.error("Error fetching formats:", error);
+            qualityLoading.classList.add('d-none');
+            qualitySelection.classList.add('d-none');
+        }
+    }
+
+    function renderQualityOptions(formats) {
+        qualityOptions.innerHTML = '';
+
+        formats.forEach((format, index) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn btn-outline-light text-start d-flex justify-content-between align-items-center';
+
+            // Mark first option as selected by default
+            if (index === 0) {
+                button.classList.add('active');
+            }
+
+            const label = document.createElement('span');
+            label.textContent = format.quality_label;
+            label.className = 'fw-semibold';
+
+            const sizeInfo = document.createElement('small');
+            sizeInfo.className = 'text-muted';
+            sizeInfo.textContent = format.filesize_approx || '';
+
+            button.appendChild(label);
+            if (format.filesize_approx) {
+                button.appendChild(sizeInfo);
+            }
+
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                qualityOptions.querySelectorAll('.btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                // Add active class to clicked button
+                button.classList.add('active');
+                // Update selected quality
+                selectedQuality = format.format_id;
+            });
+
+            qualityOptions.appendChild(button);
+        });
     }
 
     let pollInterval;
@@ -88,6 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Step 1: Request Processing
             const formData = new FormData();
             formData.append('url', url);
+
+            // Add quality parameter if selected
+            if (selectedQuality) {
+                formData.append('quality', selectedQuality);
+            }
 
             const response = await fetch('api/process.php', {
                 method: 'POST',
