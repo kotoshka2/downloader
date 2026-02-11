@@ -54,7 +54,7 @@ if (!empty($quality) && preg_match('/^\d+$/', $quality)) {
     $formatString = "bestvideo[ext=mp4],bestaudio[ext=m4a]";
 }
 
-$cmd = "yt-dlp -f \"$formatString\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
+$cmd = "yt-dlp --no-config -f \"$formatString\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
 
 
 if ($isWindows) {

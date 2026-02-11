@@ -18,7 +18,7 @@ function response($success, $message, $data = []) {
 }
 
 function cleanInput($data) {
-    return htmlspecialchars(stripslashes(trim($data)));
+    return htmlspecialchars(trim($data));
 }
 
 function cleanShellUrl($url) {

@@ -18,7 +18,7 @@ if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
 // --no-warnings: Suppress warnings
 $cookies = getCookiesFlag();
 $escapedUrl = escapeshellarg($url);
-$cmd = "yt-dlp --skip-download --dump-json --no-warnings$cookies $escapedUrl 2>&1";
+$cmd = "yt-dlp --no-config --skip-download --dump-json --no-warnings$cookies $escapedUrl 2>&1";
 
 
 
