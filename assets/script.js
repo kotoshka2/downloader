@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`api/formats.php?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
+            console.log('Formats API response:', data); // Debug logging
+
             if (data.success && data.formats && data.formats.length > 0) {
                 availableFormats = data;
                 renderQualityOptions(data.formats);
@@ -102,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 qualitySelection.classList.remove('d-none');
             } else {
                 // No formats available or error - hide quality selection
+                console.warn('No formats available or API error:', data.message || 'Unknown error');
                 qualityLoading.classList.add('d-none');
                 qualitySelection.classList.add('d-none');
                 // Optionally show a message that quality selection is not available
