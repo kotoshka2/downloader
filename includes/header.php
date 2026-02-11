@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle ?? 'Загрузчик видео'; ?></title>
     <meta name="description" content="Бесплатный сервис для скачивания видео в высоком качестве.">
+    <meta name="google-site-verification" content="wpDnEPyCihK3STwtsFVLIDyZolKllL3z0ZNo7Cvj6PE" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
