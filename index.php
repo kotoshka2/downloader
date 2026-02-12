@@ -28,22 +28,22 @@
 
             <div class="mt-4 row g-2">
                 <div class="col-6 col-sm-3">
-                    <a href="youtube.php" class="btn btn-outline-light w-100 py-3">
+                    <a href="youtube" class="btn btn-outline-light w-100 py-3">
                         YouTube
                     </a>
                 </div>
                 <div class="col-6 col-sm-3">
-                    <a href="tiktok.php" class="btn btn-outline-light w-100 py-3">
+                    <a href="tiktok" class="btn btn-outline-light w-100 py-3">
                         TikTok
                     </a>
                 </div>
                 <div class="col-6 col-sm-3">
-                    <a href="instagram.php" class="btn btn-outline-light w-100 py-3">
+                    <a href="instagram" class="btn btn-outline-light w-100 py-3">
                         Instagram
                     </a>
                 </div>
                 <div class="col-6 col-sm-3">
-                    <a href="facebook.php" class="btn btn-outline-light w-100 py-3">
+                    <a href="facebook" class="btn btn-outline-light w-100 py-3">
                         Facebook
                     </a>
                 </div>

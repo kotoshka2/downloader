@@ -22,16 +22,16 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand text-white" href="index.php">Загрузчик</a>
+        <a class="navbar-brand text-white" href="./">Загрузчик</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="youtube.php">YouTube</a></li>
-                <li class="nav-item"><a class="nav-link" href="tiktok.php">TikTok</a></li>
-                <li class="nav-item"><a class="nav-link" href="instagram.php">Instagram</a></li>
-                <li class="nav-item"><a class="nav-link" href="facebook.php">Facebook</a></li>
+                <li class="nav-item"><a class="nav-link" href="youtube">YouTube</a></li>
+                <li class="nav-item"><a class="nav-link" href="tiktok">TikTok</a></li>
+                <li class="nav-item"><a class="nav-link" href="instagram">Instagram</a></li>
+                <li class="nav-item"><a class="nav-link" href="facebook">Facebook</a></li>
             </ul>
         </div>
     </div>
