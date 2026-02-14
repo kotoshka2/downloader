@@ -19,7 +19,12 @@
 </head>
 <body>
 <script>(function(s){s.dataset.zone='10598618',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
+<script>
+  window.BugWidgetConfig = {
+    apiKey: 'brw_6fe979df8a2e4c4f8f027a9a36891f02'
+  };
+</script>
+<script src="https://today-is-friday.tech/bug-reporter/widget.js" defer></script>
 <!-- Background Shapes -->
 <div class="background-shapes">
     <div class="shape shape-1"></div>
