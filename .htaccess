@@ -1,10 +1,10 @@
 RewriteEngine On
-RewriteBase /downloader/
+RewriteBase /
 
 # 1. Redirect /any/path.php to /any/path
 # Capture the request relative to the rewrite base if possible, or matches full path
-RewriteCond %{THE_REQUEST} \s/downloader/(.*?)\.php[\s?] [NC]
-RewriteRule ^ %1 [L,R=301]
+RewriteCond %{THE_REQUEST} \s/+(.*?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [L,R=301]
 
 # 2. Internally map /any/path to /any/path.php
 RewriteCond %{REQUEST_FILENAME} !-d
