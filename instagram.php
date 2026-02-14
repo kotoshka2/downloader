@@ -28,12 +28,12 @@
 
             <div class="mt-3 row g-2">
                 <div class="col-6">
-                    <a href="instagram-reels.php" class="btn btn-outline-light w-100">
+                    <a href="instagram-reels" class="btn btn-outline-light w-100">
                         Скачать Reels
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="instagram-stories.php" class="btn btn-outline-light w-100">
+                    <a href="instagram-stories" class="btn btn-outline-light w-100">
                         Скачать Stories
                     </a>
                 </div>

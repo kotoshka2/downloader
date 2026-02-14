@@ -28,12 +28,12 @@
 
             <div class="mt-3 row g-2">
                 <div class="col-6">
-                    <a href="facebook-reels.php" class="btn btn-outline-light w-100">
+                    <a href="facebook-reels" class="btn btn-outline-light w-100">
                         Скачать Reels
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="facebook-stories.php" class="btn btn-outline-light w-100">
+                    <a href="facebook-stories" class="btn btn-outline-light w-100">
                         Скачать Stories
                     </a>
                 </div>
