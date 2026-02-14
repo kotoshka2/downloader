@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Facebook Reels</h1>
-                <p class="text-white">Скачивайте Reels из Facebook в максимально возможном качестве.</p>
+                <h1 class="fw-bold mb-2"><span class="gradient-text">Facebook Reels</span></h1>
+                <p style="color: var(--text-secondary);">Скачивайте Reels из Facebook в максимально возможном качестве.</p>
             </div>
 
             <form id="downloadForm">

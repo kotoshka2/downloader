@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">YouTube</h1>
-                <p class="text-white">Скачайте любое видео из YouTube в лучшем качестве быстро и бесплатно.</p>
+                <h1 class="fw-bold mb-2"><span class="gradient-text">YouTube</span></h1>
+                <p style="color: var(--text-secondary);">Скачайте любое видео из YouTube в лучшем качестве быстро и бесплатно.</p>
             </div>
 
             <form id="downloadForm">

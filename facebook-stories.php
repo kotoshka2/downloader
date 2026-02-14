@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Facebook Stories</h1>
-                <p class="text-white">Скачивайте сторис из Facebook в лучшем качестве быстро и удобно.</p>
+                <h1 class="fw-bold mb-2"><span class="gradient-text">Facebook Stories</span></h1>
+                <p style="color: var(--text-secondary);">Скачивайте сторис из Facebook в лучшем качестве быстро и удобно.</p>
             </div>
 
             <form id="downloadForm">

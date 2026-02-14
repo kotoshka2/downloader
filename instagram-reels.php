@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Instagram Reels</h1>
-                <p class="text-white">Скачивайте Reels из Instagram в лучшем качестве быстро и без водяных знаков.</p>
+                <h1 class="fw-bold mb-2"><span class="gradient-text">Instagram Reels</span></h1>
+                <p style="color: var(--text-secondary);">Скачивайте Reels из Instagram в лучшем качестве быстро и без водяных знаков.</p>
             </div>
 
             <form id="downloadForm">

@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Скачать отовсюду</h1>
-                <p class="text-white">Загружайте видео из любых социальных сетей в лучшем качестве.</p>
+                <h1 class="fw-bold mb-2">Скачать <span class="gradient-text">отовсюду</span></h1>
+                <p class="text-white" style="color: var(--text-secondary) !important;">Загружайте видео из любых социальных сетей в лучшем качестве.</p>
             </div>
 
             <form id="downloadForm">

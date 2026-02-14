@@ -4,8 +4,8 @@
     <div class="col-md-8 col-lg-6">
         <div class="glass-card p-5">
             <div class="text-center mb-4">
-                <h1 class="fw-bold mb-2">Instagram Stories</h1>
-                <p class="text-white">Скачивайте сторис из Instagram в лучшем качестве анонимно и быстро.</p>
+                <h1 class="fw-bold mb-2"><span class="gradient-text">Instagram Stories</span></h1>
+                <p style="color: var(--text-secondary);">Скачивайте сторис из Instagram в лучшем качестве анонимно и быстро.</p>
             </div>
 
             <form id="downloadForm">
