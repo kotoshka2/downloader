@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchVideoInfo(url) {
         try {
-            const response = await fetch(`api/info.php?url=${encodeURIComponent(url)}`);
+            const response = await fetch(`api/info?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
             if (data.success) {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             qualitySelection.classList.add('d-none');
             qualityLoading.classList.remove('d-none');
 
-            const response = await fetch(`api/formats.php?url=${encodeURIComponent(url)}`);
+            const response = await fetch(`api/formats?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
             console.log('Formats API response:', data); // Debug logging
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('quality', selectedQuality);
             }
 
-            const response = await fetch('api/process.php', {
+            const response = await fetch('api/process', {
                 method: 'POST',
                 body: formData
             });
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function pollProgress(id) {
         pollInterval = setInterval(async () => {
             try {
-                const response = await fetch(`api/progress.php?id=${id}`);
+                const response = await fetch(`api/progress?id=${id}`);
                 const data = await response.json();
 
                 if (data.status === 'downloading') {

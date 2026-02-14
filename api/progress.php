@@ -81,7 +81,7 @@ if ($progress >= 100) {
             'success' => true, 
             'status' => 'done', 
             'progress' => 100, 
-            'download_url' => 'api/download.php?id=' . $id
+            'download_url' => 'api/download?id=' . $id
         ]);
         exit;
     } else {
