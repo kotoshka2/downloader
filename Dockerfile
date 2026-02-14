@@ -30,9 +30,17 @@ WORKDIR /var/www/html
 COPY . /var/www/html/
 
 # Set up permissions for writable directories
+# Set up permissions for writable directories
 RUN mkdir -p downloads api/logs \
     && chown -R www-data:www-data downloads api/logs \
     && chmod -R 755 downloads api/logs
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
 
 # Expose port 80
 EXPOSE 80
