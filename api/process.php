@@ -47,14 +47,21 @@ $cookies = getCookiesFlag();
 // Build format string based on quality selection
 if (!empty($quality) && preg_match('/^\d+$/', $quality)) {
     // User selected specific quality: download that video format + best audio
-    // yt-dlp will automatically merge them into a single file
-    $formatString = "{$quality}+bestaudio[ext=m4a]/bestaudio";
+    // Fallback to best single file if separate streams unavailable (e.g. TikTok)
+    $formatString = "{$quality}+bestaudio[ext=m4a]/{$quality}+bestaudio/best[ext=mp4]/best";
 } else {
-    // Default: best video and audio as separate files (current behavior)
-    $formatString = "bestvideo[ext=mp4],bestaudio[ext=m4a]";
+    // Default: best video+audio merged, fallback to best single file
+    $formatString = "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best";
 }
 
-$cmd = "yt-dlp --no-config -f \"$formatString\" --newline --restrict-filenames$cookies -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
+// Pass ffmpeg location for merging video+audio streams
+$ffmpegFlag = '';
+if (defined('FFMPEG_PATH') && FFMPEG_PATH !== 'ffmpeg') {
+    $ffmpegDir = dirname(FFMPEG_PATH);
+    $ffmpegFlag = ' --ffmpeg-location ' . escapeshellarg($ffmpegDir);
+}
+
+$cmd = "yt-dlp --no-config -f \"$formatString\" --newline --restrict-filenames$cookies$ffmpegFlag -o \"$outputTemplate\" \"$url\" > \"$logFile\" 2>&1";
 
 
 if ($isWindows) {
