@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /api
+Disallow: /downloader/api
 
 Sitemap: https://today-is-friday.tech/sitemap.xml
