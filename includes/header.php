@@ -21,10 +21,12 @@
 <script>(function(s){s.dataset.zone='10598618',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <script>
   window.ErroraWidgetConfig = {
-    apiKey: 'err_6fe979df8a2e4c4f8f027a9a36891f02'
+    apiKey: 'err_6fe979df8a2e4c4f8f027a9a36891f02',
+    lang: 'en',
+    position: 'bottom-right'
   };
 </script>
-<script src="https://today-is-friday.tech/errora/errora-widget.iife.js" defer></script>
+<script src="https://errora.net/errora-widget.iife.js" defer></script>
 <!-- Background Shapes -->
 <div class="background-shapes">
     <div class="shape shape-1"></div>
